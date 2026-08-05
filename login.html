@@ -4,24 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - NRI Institute</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    
 </head>
 <body>
     <header>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="course.html">Courses</a>
-            <a href="traners.html">Trainers</a>
-            <a href="register.html">Register</a>
-            <a href="login.html">Login</a>
-            <a href="contact.html">Contact</a>
+             <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/course">Courses</a>
+            <a href="/traners">Trainers</a>
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+            <a href="/contact">Contact</a>
         </nav>
     </header>
 
     <main>
         <section>
+            <p>Track their learning journey.</p>
+            <p>Learning never stops</p>
+            <img src="{{ url_for('static', filename='image/banner.jpg') }}" alt="LMS Banner">
+            
+        
+
             <h2>Login</h2>
-            <form>
+            <form id="loginForm" method="post">
                 <label>Email:</label><br>
                 <input type="email" name="email"><br><br>
 
@@ -32,5 +40,6 @@
             </form>
         </section>
     </main>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

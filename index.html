@@ -1,43 +1,52 @@
-I’m correcting the broken HTML structure and giving you a complete, working version of the homepage code.
-
-Replacing 26 lines with 31 lines in [](file:///workspaces/python_fullstack/index.html)
-
-
-```
-
-```
-Here is the full corrected code for index.html:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NRI Institute</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    
 </head>
 <body>
     <header>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="course.html">Courses</a>
-            <a href="traners.html">Trainers</a>
-            <a href="register.html">Register</a>
-            <a href="login.html">Login</a>
-            <a href="contact.html">Contact</a>
+            <a href="/index">Home</a>
+            <a href="/about">About</a>
+            <a href="/course">Courses</a>
+            <a href="/traners">Trainers</a>
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+            <a href="/contact">Contact</a>
         </nav>
     </header>
 
     <main>
         <h2>Welcome to NRI Learning Management System</h2>
         <p>NRI Institute is a renowned educational institution committed to academic excellence, innovation, and holistic development.</p>
+        <p>NRI University is known for providing quality education, modern facilities, and a strong focus on student success. It encourages learning through practical experience, expert guidance, and a supportive academic environment.</p>
         <ul>
             <li>Experienced faculty</li>
             <li>Modern learning environment</li>
             <li>Career-focused education</li>
         </ul>
+
+        <section>
+            <h3>Project Titles</h3>
+            <ul>
+                <li>NRI Learning Management System</li>
+                <li>Student Admission Portal</li>
+                <li>Career Guidance and Training Program</li>
+                <li>Smart Education Platform</li>
+            </ul>
+        </section>
+
+        <div id="message"></div>
+        <br>
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80" alt="NRI University campus" width="500">
     </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}">
+    </script>
 </body>
 </html>
  I’m providing the continued HTML code for the same page so you can add it directly beneath the existing content.
