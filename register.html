@@ -1,56 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - NRI Institute</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
-    
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <title>Register page</title>
 </head>
+
 <body>
-    <header>
-        <nav>
-             <a href="/">Home</a>
-            <a href="/about">About</a>
-            <a href="/course">Courses</a>
-            <a href="/traners">Trainers</a>
-            <a href="/register">Register</a>
-            <a href="/login">Login</a>
-            <a href="/contact">Contact</a>
-        </nav>
-    </header>
-
+    <header>Register</header>
     <main>
-        <section>
-            <h2>Student Registration</h2>
-            <form id="registerForm" method="post">
-                <label>Full Name:</label><br>
-                <input type="text" name="full_name"><br><br>
-
-                <label>Date of Birth:</label><br>
-                <input type="date" name="dob"><br><br>
-
-                <label>Phone Number:</label><br>
-                <input type="tel" name="phone"><br><br>
-
-                <label>Email:</label><br>
-                <input type="email" name="email"><br><br>
-
-                <label>Course:</label><br>
-                <select name="course">
-                    <option value="computer-science">Computer Science</option>
-                    <option value="business-management">Business Management</option>
-                    <option value="engineering">Engineering</option>
-                </select><br><br>
-
-                <label>Password:</label><br>
-                <input type="password" name="password"><br><br>
-
-                <button type="submit">Register</button>
-            </form>
-        </section>
+        <h2>Student Registration </h2>
+        <form id="registerForm" method="POST">
+            <label>Full Name</label><br>
+            <input type="text" placeholder="Enter Your Name" id="name" name="name"><br>
+            <label>Email</label><br>
+            <input type="email" placeholder="Enter your email" id="email" name="email"><br>
+            <label>Password</label><br>
+            <input type="password" placeholder="Enter Your Password" id="password" name="password"><br>
+            <label>Date of Birth</label><br>
+            <input type="date" placeholder="DOB" name="dob"><br>
+            <label>Gender</label><br>
+            <input type="radio" name="gender" value="Male">Male
+            <input type="radio" name="gender" value="Female">Female <br><br>
+            <label>Select Course</label>
+            <br>
+            <select name="course">
+                <option>Python FullStack</option>
+                <option>Java FullStack</option>
+            </select>
+            <br>
+            <button type="submit" value="Register">Register</button>
+        </form>
     </main>
-    <script src="{{ url_for('static', filename='js/script.js') }}">
-    </script>
+    <script src="{{url_for('static',filename='js/script.js')}}"></script>
 </body>
+
 </html>
