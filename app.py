@@ -1,116 +1,74 @@
-import os
+from flask import Flask, render_template, jsonify, request, redirect, url_for, session
 import sqlite3
 
-from flask import Flask, render_template, jsonify, request
-
 app = Flask(__name__)
+app.secret_key = "your_secret_key"
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "users.db")
 
-
+# Database connection
 def get_db_connection():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect("database.db")
     conn.row_factory = sqlite3.Row
     return conn
 
 
-def init_db():
-    with get_db_connection() as conn:
-        conn.execute(
-            """
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                email TEXT NOT NULL UNIQUE,
-                password TEXT NOT NULL,
-                dob TEXT,
-                gender TEXT,
-                course TEXT
-            )
-            """
-        )
-        conn.commit()
-
-
-init_db()
-
-@app.route('/')
+# Home
+@app.route("/")
 def home():
     return render_template("index.html")
 
-@app.route('/about')
-def about():
-    return render_template("about.html")
 
-@app.route('/contact')
-def contact():
-    return render_template("contact.html")
-
-@app.route('/courses')
-def courses():
-    return render_template("courses.html")
-
-@app.route('/trainers')
-def trainers():
-    return render_template("trainers.html")
-
-@app.route('/register',methods=["POST","GET"])
-def register():
-    if request.method=="POST":
-        name=request.form["name"]
-        email=request.form["email"]
-        password=request.form["password"]
-        dob=request.form["dob"]
-        gender=request.form["gender"]
-        course=request.form["course"]
-        return render_template("register.html")
-    return render_template("register.html")
-
-@app.route('/login', methods=["POST", "GET"])
+# Login
+@app.route("/login", methods=["GET"])
 def login():
-    if request.method == "POST":
-        return render_template("login.html")
     return render_template("login.html")
 
-@app.route('/api/register', methods=["POST"])
-def api_register():
-    data = request.get_json(silent=True) or {}
-    email = (data.get("email") or "").strip().lower()
 
-    if not email:
-        return jsonify({"status": "error", "message": "Email is required!"}), 400
 
-    with get_db_connection() as conn:
-        existing_user = conn.execute(
-            "SELECT 1 FROM users WHERE email = ?",
-            (email,)
-        ).fetchone()
+# Register
+@app.route("/register", methods=["POST", "GET"])
+def register():
 
-        if existing_user:
-            return jsonify({"status": "error", "message": "User already exists with this email!"}), 400
+    if request.method == "POST":
+        name = request.form["name"]
+        email = request.form["email"]
+        password = request.form["password"]
+        dob = request.form["dob"]
+        gender = request.form["gender"]
+        course = request.form["course"]
 
-        conn.execute(
-            """
-            INSERT INTO users (name, email, password, dob, gender, course)
-            VALUES (?, ?, ?, ?, ?, ?)
-            """,
-            (
-                data.get("name"),
-                email,
-                data.get("password"),
-                data.get("dob"),
-                data.get("gender"),
-                data.get("course")
+        with get_db_connection() as conn:
+            conn.execute(
+                """
+                INSERT INTO users
+                (name, email, password, dob, gender, course)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    name,
+                    email,
+                    password,
+                    dob,
+                    gender,
+                    course
+                )
             )
-        )
-        conn.commit()
+            conn.commit()
 
-    return jsonify({"status": "success", "message": "Registration successful!"})
+        return jsonify({
+            "status": "success",
+            "message": "Registration successful!"
+        })
+
+    return render_template("register.html")
 
 
-@app.route('/api/login', methods=["POST"])
+# API Login
+@app.route("/api/login", methods=["POST"])
 def api_login():
+
     data = request.get_json(silent=True) or {}
+
     email = (data.get("email") or "").strip().lower()
     password = data.get("password")
 
@@ -121,8 +79,28 @@ def api_login():
         ).fetchone()
 
     if user:
-        return jsonify({"status": "success", "message": "Login successful! Welcome back."})
-    return jsonify({"status": "error", "message": "Invalid email or password!"}), 401
+        session["user_email"] = user["email"]
+        session["user_name"] = user["name"]
 
-if __name__ == '__main__':
+        return jsonify({
+            "status": "success",
+            "message": "Login successful! Welcome back."
+        })
+
+    return jsonify({
+        "status": "error",
+        "message": "Invalid email or password!"
+    }), 401
+
+@app.route('/logout', methods=["GET"])
+def logout():
+    session.pop("user_email", None)
+    session.pop("user_name", None)
+    return redirect(url_for("home"))
+
+
+# Run application
+if __name__ == "__main__":
     app.run(debug=True)
+    
+    

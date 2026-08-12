@@ -14,14 +14,18 @@
         <h1>Contact NRIIT Learning Management</h1>
         <p>Learn Practice Get Placed</p>
         <nav>
-            <a href="/">Home</a>
-            <a href="/about">About</a>
-            <a href="/courses">Courses</a>
-            <a href="/trainers">Trainers</a>
-            <a href="/register">Register</a>
-            <a href="/login">Login</a>
-            <a href="/contact">Contact</a>
-        </nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/courses">Courses</a>
+      <a href="/trainers">Trainers</a>
+      {% ifsession.get('user_email')%}
+      <a href="/logout">Logout</a>
+      {% else %}
+      <a href="/register">Register</a>
+      {% endif %}
+      <a href="/login">Login</a>
+      <a href="/contact">Contact</a>
+    </nav>
     </header>
     <main>
 
