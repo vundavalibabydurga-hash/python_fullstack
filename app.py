@@ -2,10 +2,7 @@ import sqlite3
 # pyrefly: ignore [missing-import]
 from flask import Flask,render_template,jsonify,request,redirect,url_for,session
 #pyrefly:ignore [miing-import]
-from wekzug.security import 
-generate_password_hash,check_password_hash
-
-
+from werkzeug.security import check_password_hash
 app = Flask(__name__)
 app.secret_key="super_secret_key"
 
