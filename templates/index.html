@@ -18,14 +18,14 @@
       <a href="/about">About</a>
       <a href="/courses">Courses</a>
       <a href="/trainers">Trainers</a>
-      {% if session.get('user_email')%}
+      {% if session.get('user_email') %}
+      <a href="/tasks">Tasks</a>
       <a href="/logout">Logout</a>
       {% else %}
       <a href="/register">Register</a>
       {% endif %}
       <a href="/login">Login</a>
       <a href="/contact">Contact</a>
-    </nav>
   </header>
   <main>
     <section>
